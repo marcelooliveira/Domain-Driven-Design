@@ -16,11 +16,13 @@ namespace eCommerce.ApplicationLayer.Carts
         IRepository<Cart> cartRepository;
         IUnitOfWork unitOfWork;
         TaxService taxDomainService;
-        CheckoutService checkoutDomainService; 
+        CheckoutService checkoutDomainService;
+        private IMapper mapper { get; set; }
 
         public CartService(IRepository<Customer> customerRepository, 
             IRepository<Product> productRepository, IRepository<Cart> cartRepository, 
-            IUnitOfWork unitOfWork, TaxService taxDomainService, CheckoutService checkoutDomainService)
+            IUnitOfWork unitOfWork, TaxService taxDomainService, CheckoutService checkoutDomainService,
+            IMapper mapper)
         {
             this.customerRepository = customerRepository;
             this.productRepository = productRepository;
@@ -28,6 +30,7 @@ namespace eCommerce.ApplicationLayer.Carts
             this.unitOfWork = unitOfWork;
             this.taxDomainService = taxDomainService;
             this.checkoutDomainService = checkoutDomainService;
+            this.mapper = mapper;
         }
 
         public CartDto Add(Guid customerId, CartProductDto productDto)

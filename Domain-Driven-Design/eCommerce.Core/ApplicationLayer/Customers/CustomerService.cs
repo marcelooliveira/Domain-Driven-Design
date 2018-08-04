@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using eCommerce.DomainModelLayer.Countries;
 using eCommerce.DomainModelLayer.Purchases;
+using AutoMapper;
 
 namespace eCommerce.ApplicationLayer.Customers
 {
@@ -16,14 +17,17 @@ namespace eCommerce.ApplicationLayer.Customers
         readonly IRepository<Country> countryRepository;
         readonly IRepository<Purchase> purchaseRepository;
         readonly IUnitOfWork unitOfWork;
+        private IMapper mapper { get; set; }
 
         public CustomerService(ICustomerRepository customerRepository,
-            IRepository<Country> countryRepository, IRepository<Purchase> purchaseRepository, IUnitOfWork unitOfWork)
+            IRepository<Country> countryRepository, IRepository<Purchase> purchaseRepository, IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             this.customerRepository = customerRepository;
             this.countryRepository = countryRepository;
             this.purchaseRepository = purchaseRepository;
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public bool IsEmailAvailable(string email)

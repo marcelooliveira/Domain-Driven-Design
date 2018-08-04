@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 
 namespace eCommerce.ApplicationLayer.Products
 {
@@ -12,20 +13,23 @@ namespace eCommerce.ApplicationLayer.Products
         readonly IRepository<Product> productRepository;
         readonly IRepository<ProductCode> productCodeRepository;
         readonly IUnitOfWork unitOfWork;
+        private IMapper mapper { get; set; }
 
         public ProductService(IRepository<Product> productRepository, 
             IRepository<ProductCode> productCodeRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             this.productRepository = productRepository;
             this.productCodeRepository = productCodeRepository;
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
 
         public ProductDto Get(Guid productId)
         {
             Product product = this.productRepository.FindById(productId);
-            return AutoMapper.Mapper.Map<Product, ProductDto>(product);
+            return mapper.Map<Product, ProductDto>(product);
         }
 
         public ProductDto Add(ProductDto productDto)
@@ -41,7 +45,7 @@ namespace eCommerce.ApplicationLayer.Products
 
             this.productRepository.Add(product);
 
-            return AutoMapper.Mapper.Map<Product, ProductDto>(product);
+            return mapper.Map<Product, ProductDto>(product);
         }
     }
 }
